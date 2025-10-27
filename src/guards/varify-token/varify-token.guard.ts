@@ -33,6 +33,7 @@ export class JwtGuard implements CanActivate {
 
       // Attach user to request
       request['user'] = user;
+      // console.log('user', request['user'])
       return true;
     } catch (err) {
       throw new UnauthorizedException('Token verification failed');
