@@ -1,17 +1,12 @@
 import { NestFactory } from '@nestjs/core';
-import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
-import { ResponseInterceptor } from './interceptors/response-handler/response-handler.interceptor';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ExpressAdapter } from '@nestjs/platform-express';
+import express from 'express';
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  const configService = app.get(ConfigService);
-
-  const PORT = configService.get('PORT') ?? 3000;
-
-  app.setGlobalPrefix('api');
-  app.useGlobalInterceptors(new ResponseInterceptor());
+async function bootstrapSwagger() {
+  const server = express();
+  const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
 
   // Swagger configuration
   const config = new DocumentBuilder()
@@ -42,9 +37,9 @@ async function bootstrap() {
     },
   });
 
-  await app.listen(PORT, () => {
-    console.log(`Application is running on: http://localhost:${PORT}/api`);
-    console.log(`Swagger documentation available at: http://localhost:${PORT}/docs`);
+  await app.listen(4000, () => {
+    console.log(`Swagger documentation available at: http://localhost:4000/docs`);
   });
 }
-bootstrap();
+
+bootstrapSwagger();

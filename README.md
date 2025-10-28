@@ -49,6 +49,20 @@ npm run start:prod
 
 The application will be available at `http://localhost:3000`
 
+### 4. Start Swagger Documentation Server
+
+In a separate terminal, start the Swagger documentation server:
+
+```bash
+# Start Swagger server on port 4000
+npm run swagger
+
+# Or start with auto-reload during development
+npm run swagger:dev
+```
+
+The Swagger documentation will be available at `http://localhost:4000/docs`
+
 ## Development Setup
 
 ### 1. Environment Setup
@@ -142,13 +156,43 @@ src/
 └── pipes/              # Validation pipes
 ```
 
-## API Endpoints
+## API Documentation
 
-The application provides RESTful APIs for:
-- User authentication and management
-- Merchant management
-- Transaction processing
-- Payment gateway operations
+The application provides comprehensive API documentation through Swagger UI:
+
+- **Swagger UI**: http://localhost:4000/docs
+- **API Base URL**: http://localhost:3000/api
+
+### Available Endpoints
+
+The API includes the following main modules:
+
+#### Authentication
+- `POST /api/auth/login` - User login
+
+#### Users
+- `POST /api/user` - Create user (JWT required)
+- `GET /api/user` - List users (JWT required)
+
+#### Merchants
+- `POST /api/merchant` - Create merchant (Admin only)
+- `GET /api/merchant/list` - List merchants (JWT required)
+- `GET /api/merchant/:id` - Get merchant details (JWT required)
+- `PATCH /api/merchant/:id` - Update merchant (Admin only)
+
+#### Transactions
+- `POST /api/transaction` - Create transaction (JWT required)
+- `POST /api/transaction/approve` - Approve transaction (Admin only)
+- `POST /api/transaction/decline` - Decline transaction (Admin only)
+- `GET /api/transaction` - List transactions (Admin only)
+
+### Authentication
+
+Most endpoints require JWT authentication. To authenticate:
+
+1. Use the login endpoint to get a JWT token
+2. Include the token in the Authorization header: `Bearer <your-token>`
+3. Admin-only endpoints require a user with 'admin' role
 
 ## Stopping Services
 
