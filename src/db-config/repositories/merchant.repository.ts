@@ -54,7 +54,6 @@ export class MerchantRepository {
 
   async update(id: string, updateData: Partial<Merchant>): Promise<Merchant | null> {
     return this.merchantModel.findByIdAndUpdate(id, updateData, { new: true })
-      .populate('userId', '-hashedPassword')
       .exec();
   }
 
