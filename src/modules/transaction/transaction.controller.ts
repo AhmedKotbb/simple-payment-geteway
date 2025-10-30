@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Patch, Post, Query, UseGuards, UsePipes } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiQuery, ApiBearerAuth, ApiSecurity } from '@nestjs/swagger';
 import { TransactionService } from './transaction.service';
 import { JwtGuard } from 'src/guards/varify-token/varify-token.guard';
 import { JoiValidationPipe } from 'src/pipes/joi-validation/joi-validation.pipe';
@@ -8,7 +8,7 @@ import * as transactionInterface from './DOTs/transaction.interface';
 import { AdminGuard } from 'src/guards/admin/admin.guard';
 
 @ApiTags('Transactions')
-@ApiBearerAuth('JWT-auth')
+@ApiSecurity('authorization')
 @Controller('transaction')
 export class TransactionController {
 

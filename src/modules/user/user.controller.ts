@@ -1,13 +1,14 @@
 import { Body, Controller, Get, Param, Post, Query, UseGuards, UsePipes } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiQuery, ApiBearerAuth, ApiSecurity } from '@nestjs/swagger';
 import * as userInterfaces from './DOTs/user.interfaces';
 import { JoiValidationPipe } from 'src/pipes/joi-validation/joi-validation.pipe';
 import { UserSchemas } from './DOTs/user.schema';
 import { UserService } from './user.service';
 import { JwtGuard } from 'src/guards/varify-token/varify-token.guard';
+import { AdminGuard } from 'src/guards/admin/admin.guard';
 
 @ApiTags('Users')
-@ApiBearerAuth('JWT-auth')
+@ApiSecurity('authorization')
 @Controller('user')
 export class UserController {
 
@@ -15,7 +16,7 @@ export class UserController {
         private _service: UserService,
     ){}
 
-    @UseGuards(JwtGuard)
+    @UseGuards(JwtGuard, AdminGuard)
     @Post()
     @UsePipes(new JoiValidationPipe(UserSchemas.createUserSchema))
     @ApiOperation({ summary: 'Create user', description: 'Create a new user account' })

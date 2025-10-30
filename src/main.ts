@@ -18,16 +18,14 @@ async function bootstrap() {
     .setTitle('Simple Payment Gateway API')
     .setDescription('A comprehensive payment gateway API built with NestJS and MongoDB')
     .setVersion('1.0')
-    .addBearerAuth(
+    .addApiKey(
       {
-        type: 'http',
-        scheme: 'bearer',
-        bearerFormat: 'JWT',
-        name: 'JWT',
-        description: 'Enter JWT token',
+        type: 'apiKey',
+        name: 'authorization',
         in: 'header',
+        description: 'Enter token',
       },
-      'JWT-auth',
+      'authorization',
     )
     .addTag('Authentication', 'User authentication endpoints')
     .addTag('Users', 'User management endpoints')

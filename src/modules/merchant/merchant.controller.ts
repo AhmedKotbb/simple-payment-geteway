@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Patch, Post, Query, UseGuards, UsePipes } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiQuery, ApiBearerAuth, ApiParam } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiQuery, ApiBearerAuth, ApiParam, ApiSecurity } from '@nestjs/swagger';
 import { AdminGuard } from 'src/guards/admin/admin.guard';
 import { JwtGuard } from 'src/guards/varify-token/varify-token.guard';
 import * as merchantInterfaces from './DOTs/merchant.interfaces'
@@ -8,7 +8,7 @@ import { JoiValidationPipe } from 'src/pipes/joi-validation/joi-validation.pipe'
 import { merchantSchemas } from './DOTs/merchant.schemas';
 
 @ApiTags('Merchants')
-@ApiBearerAuth('JWT-auth')
+@ApiSecurity('authorization')
 @Controller('merchant')
 export class MerchantController {
 
